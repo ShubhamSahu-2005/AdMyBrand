@@ -12,11 +12,13 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Chart } from '@/components/ui/custom-chart';
 import { DataTable } from '@/components/ui/data-table';
 import { MetricCardSkeleton, ChartSkeleton, TableSkeleton } from '@/components/ui/loading-skeletons';
+import { MobileMenu } from '@/components/ui/mobile-menu';
 import { useTheme } from '@/hooks/use-theme';
 import { mockData, DashboardData } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 import { format, subDays } from 'date-fns';
 import logoImage from '@/assets/admybrand-logo.png';
+import webLogo from '@/assets/web_logo.svg';
 
 export function EnhancedDashboard() {
   const { theme, toggleTheme } = useTheme();
@@ -131,7 +133,7 @@ export function EnhancedDashboard() {
 
     return (
       <Card className="bg-card shadow-card border-border/50 hover:shadow-lifted transition-all duration-200 animate-fade-in hover-scale">
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground font-medium">{title}</p>
@@ -160,25 +162,24 @@ export function EnhancedDashboard() {
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-gradient-glass backdrop-blur-sm border-b border-border/50 transition-colors duration-300">
-        <div className="container mx-auto px-6 py-4">
+      <header className="sticky top-0 z-50 bg-gradient-glass backdrop-blur-sm border-b border-border/50 transition-colors duration-300 dark:bg-[hsl(var(--nav-background))]">
+        <div className="container mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <img src={logoImage} alt="ADmyBRAND" className="h-8" />
-              <h1 className="text-xl font-semibold text-foreground">Analytics Dashboard</h1>
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <img src={webLogo} alt="AdMyBrand" className="h-6 sm:h-8 md:h-10" />
               {isRealTimeEnabled && (
-                <Badge variant="success" className="animate-pulse">
+                <Badge variant="success" className="animate-pulse hidden sm:flex">
                   <div className="w-2 h-2 bg-success rounded-full mr-2"></div>
                   Live
                 </Badge>
               )}
             </div>
             
-            <div className="flex items-center space-x-4">
-              {/* Date Range Picker */}
+            <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4">
+              {/* Date Range Picker - Hidden on mobile and tablet */}
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" className="hover-scale">
+                  <Button variant="outline" className="hover-scale hidden lg:flex">
                     <Calendar className="h-4 w-4 mr-2" />
                     {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd')}
                   </Button>
@@ -198,9 +199,9 @@ export function EnhancedDashboard() {
                 </PopoverContent>
               </Popover>
 
-              {/* Timeframe Selector */}
+              {/* Timeframe Selector - Hidden on mobile and tablet */}
               <Select value={timeframe} onValueChange={setTimeframe}>
-                <SelectTrigger className="w-32">
+                <SelectTrigger className="w-32 hidden xl:flex">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -211,52 +212,55 @@ export function EnhancedDashboard() {
                 </SelectContent>
               </Select>
 
-              {/* Real-time Toggle */}
+              {/* Real-time Toggle - Hidden on mobile */}
               <Button
                 variant={isRealTimeEnabled ? "default" : "outline"}
                 size="sm"
                 onClick={() => setIsRealTimeEnabled(!isRealTimeEnabled)}
-                className="hover-scale"
+                className="hover-scale hidden md:flex"
               >
                 <RefreshCw className={cn("h-4 w-4 mr-2", isRealTimeEnabled && "animate-spin")} />
                 Real-time
               </Button>
-
-              {/* Search */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  placeholder="Search..."
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  className="pl-10 w-64 bg-card border-border/50"
-                />
-              </div>
               
-              {/* Theme Toggle */}
-              <Button variant="ghost" size="icon" onClick={toggleTheme} className="hover-scale">
-                {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+              {/* Theme Toggle - Hidden on mobile */}
+              <Button variant="ghost" size="icon" onClick={toggleTheme} className="hover-scale hidden sm:flex">
+                {theme === 'light' ? <Moon className="h-4 w-4 sm:h-5 sm:w-5" /> : <Sun className="h-4 w-4 sm:h-5 sm:w-5" />}
               </Button>
 
-              {/* Notifications */}
-              <Button variant="ghost" size="icon" className="relative hover-scale">
-                <Bell className="h-5 w-5" />
+              {/* Notifications - Hidden on mobile */}
+              <Button variant="ghost" size="icon" className="relative hover-scale hidden sm:flex">
+                <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span className="absolute -top-1 -right-1 h-3 w-3 bg-primary rounded-full animate-pulse"></span>
               </Button>
               
-              {/* User Avatar */}
-              <Avatar className="h-8 w-8 hover-scale">
+              {/* User Avatar - Hidden on mobile */}
+              <Avatar className="h-6 w-6 sm:h-8 sm:w-8 md:h-8 md:w-8 hover-scale hidden sm:flex">
                 <AvatarImage src="/placeholder-avatar.jpg" />
-                <AvatarFallback className="bg-primary text-primary-foreground">JD</AvatarFallback>
+                <AvatarFallback className="bg-primary text-primary-foreground text-xs sm:text-sm">JD</AvatarFallback>
               </Avatar>
+
+              {/* Mobile Menu */}
+              <MobileMenu
+                theme={theme}
+                toggleTheme={toggleTheme}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+                dateRange={dateRange}
+                setDateRange={setDateRange}
+                timeframe={timeframe}
+                setTimeframe={setTimeframe}
+                isRealTimeEnabled={isRealTimeEnabled}
+                setIsRealTimeEnabled={setIsRealTimeEnabled}
+              />
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-8 space-y-8">
+      <div className="container mx-auto px-3 sm:px-6 py-3 sm:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
           <MetricCard
             title="Total Revenue"
             value={`$${totalRevenue.toLocaleString()}`}
@@ -292,7 +296,7 @@ export function EnhancedDashboard() {
         </div>
 
         {/* Charts Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
           {/* Line Chart */}
           {loading ? (
             <ChartSkeleton />
@@ -323,7 +327,7 @@ export function EnhancedDashboard() {
         </div>
 
         {/* Pie Chart and Analytics */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
           {/* Traffic Sources Pie Chart */}
           {loading ? (
             <ChartSkeleton height="h-64" />
@@ -391,7 +395,6 @@ export function EnhancedDashboard() {
             data={currentData?.campaigns || []}
             columns={campaignColumns}
             title="Campaign Performance"
-            searchable={true}
             filterable={true}
             exportable={true}
             onRowAction={(action, row) => {

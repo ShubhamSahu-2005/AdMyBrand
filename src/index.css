@@ -9,7 +9,7 @@ All colors MUST be HSL for proper theme support.
 @layer base {
   :root {
     /* Core Background Colors */
-    --background: 220 14% 98%; /* #F9FAFB - Very light grey */
+    --background: #272727; /* #F9FAFB - Very light grey */
     --foreground: 220 13% 10%; /* #111827 - Charcoal */
 
     /* Card System */
@@ -134,6 +134,9 @@ All colors MUST be HSL for proper theme support.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Navigation background color for dark mode */
+    --nav-background: 0 0% 15%; /* #272727 */
   }
 }
 
@@ -155,4 +158,45 @@ All colors MUST be HSL for proper theme support.
   .story-link {
     @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
   }
+
+  /* Responsive utilities */
+  .container-responsive {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Mobile-first responsive text */
+  .text-responsive {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+
+  /* Responsive spacing */
+  .space-responsive {
+    @apply space-y-4 sm:space-y-6 lg:space-y-8;
+  }
+
+  /* Mobile-specific utilities */
+  .mobile-container {
+    @apply px-3 sm:px-6 lg:px-8;
+  }
+
+  .mobile-text {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+
+  .mobile-gap {
+    @apply gap-3 sm:gap-4 lg:gap-6;
+  }
+
+  /* Touch-friendly buttons for mobile */
+  .touch-friendly {
+    @apply min-h-[44px] min-w-[44px];
+  }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s cubic-bezier(0.4,0,0.2,1) both;
 }

@@ -2,39 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* ADmyBRAND Insights Design System - Modern Analytics Dashboard
+All colors MUST be HSL for proper theme support.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Background Colors */
+    --background: 220 14% 98%; /* #F9FAFB - Very light grey */
+    --foreground: 220 13% 10%; /* #111827 - Charcoal */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card System */
+    --card: 0 0% 100%; /* Pure white cards */
+    --card-foreground: 220 13% 10%;
 
+    /* Popover System */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 13% 10%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary Brand Colors */
+    --primary: 243 75% 59%; /* #4F46E5 - Vibrant Indigo */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 243 75% 70%; /* Lighter version for effects */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary Colors */
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 13% 10%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Colors */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%; /* #6B7280 - Muted Grey */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent Colors */
+    --accent: 220 14% 96%;
+    --accent-foreground: 220 13% 10%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Success Colors */
+    --success: 160 84% 39%; /* #10B981 - Green */
+    --success-foreground: 0 0% 100%;
+    --success-light: 160 84% 90%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Warning Colors */
+    --warning: 45 93% 58%; /* Yellow for paused status */
+    --warning-foreground: 220 13% 10%;
+    --warning-light: 45 93% 90%;
+
+    /* Status Colors */
+    --status-active: 160 84% 39%;
+    --status-paused: 45 93% 58%;
+    --status-stopped: 0 84% 60%;
+
+    /* Chart Colors */
+    --chart-revenue: 243 75% 59%; /* Primary blue */
+    --chart-spend: 220 9% 46%; /* Muted grey */
+    --chart-organic: 160 84% 39%; /* Green */
+    --chart-paid: 262 83% 58%; /* Purple */
+    --chart-referral: 32 95% 44%; /* Orange */
+
+    /* Glassmorphism */
+    --glass-bg: 0 0% 100% / 0.8;
+    --glass-border: 220 13% 91% / 0.3;
+    --glass-shadow: 220 13% 10% / 0.1;
+
+    /* Shadows & Effects */
+    --shadow-soft: 0 1px 3px 0 hsl(220 13% 10% / 0.1), 0 1px 2px -1px hsl(220 13% 10% / 0.1);
+    --shadow-card: 0 4px 6px -1px hsl(220 13% 10% / 0.1), 0 2px 4px -2px hsl(220 13% 10% / 0.1);
+    --shadow-lifted: 0 10px 15px -3px hsl(220 13% 10% / 0.1), 0 4px 6px -4px hsl(220 13% 10% / 0.1);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-revenue: linear-gradient(180deg, hsl(var(--chart-revenue) / 0.3) 0%, hsl(var(--chart-revenue) / 0.05) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(var(--glass-bg)), hsl(0 0% 100% / 0.6));
+
+    /* Borders */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 243 75% 59%;
 
     --radius: 0.5rem;
 

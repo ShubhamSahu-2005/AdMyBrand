@@ -19,7 +19,6 @@ interface DataTableProps {
   data: any[];
   columns: Column[];
   title: string;
-  searchable?: boolean;
   filterable?: boolean;
   exportable?: boolean;
   pageSize?: number;
@@ -31,14 +30,12 @@ export function DataTable({
   data,
   columns,
   title,
-  searchable = true,
   filterable = true,
   exportable = true,
   pageSize = 10,
   loading = false,
   onRowAction
 }: DataTableProps) {
-  const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,15 +43,6 @@ export function DataTable({
 
   const filteredAndSortedData = useMemo(() => {
     let filtered = [...data];
-
-    // Search filter
-    if (searchTerm) {
-      filtered = filtered.filter(row =>
-        columns.some(col => 
-          String(row[col.key]).toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
-    }
 
     // Status filter
     if (statusFilter !== 'all') {
@@ -83,7 +71,7 @@ export function DataTable({
     }
 
     return filtered;
-  }, [data, searchTerm, sortField, sortDirection, statusFilter, columns]);
+  }, [data, sortField, sortDirection, statusFilter, columns]);
 
   const paginatedData = useMemo(() => {
     const startIndex = (currentPage - 1) * pageSize;
@@ -161,24 +149,14 @@ export function DataTable({
   return (
     <Card className="bg-card shadow-card border-border/50 animate-fade-in">
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>{title}</CardTitle>
-          <div className="flex items-center space-x-2">
-            {searchable && (
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-64"
-                />
-              </div>
-            )}
+        <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+          <CardTitle className="text-lg sm:text-xl">{title}</CardTitle>
+          <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-x-2 sm:space-y-0">
+
             
             {filterable && (
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-32">
+                <SelectTrigger className="w-full sm:w-32">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue />
                 </SelectTrigger>
@@ -194,7 +172,7 @@ export function DataTable({
             {exportable && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="w-full sm:w-auto">
                     <Download className="h-4 w-4 mr-2" />
                     Export
                   </Button>
@@ -214,27 +192,29 @@ export function DataTable({
       </CardHeader>
       
       <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full">
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <table className="w-full px-4 sm:px-0">
             <thead>
               <tr className="border-b border-border">
                 {columns.map((column) => (
                   <th
                     key={column.key}
-                    className={`text-left py-3 px-4 font-medium text-muted-foreground ${
+                    className={`text-left py-3 px-2 sm:px-4 font-medium text-muted-foreground ${
                       column.sortable ? 'cursor-pointer hover:text-foreground transition-colors' : ''
                     }`}
                     onClick={() => column.sortable && handleSort(column.key)}
                   >
-                    <div className="flex items-center space-x-2">
-                      <span>{column.label}</span>
+                    <div className="flex items-center space-x-1 sm:space-x-2">
+                      <span className="text-xs sm:text-sm">{column.label}</span>
                       {column.sortable && (
-                        <ArrowUpDown className="h-4 w-4" />
+                        <ArrowUpDown className="h-3 w-3 sm:h-4 sm:w-4" />
                       )}
                     </div>
                   </th>
                 ))}
-                <th className="text-right py-3 px-4 font-medium text-muted-foreground">Actions</th>
+                <th className="text-right py-3 px-2 sm:px-4 font-medium text-muted-foreground">
+                  <span className="text-xs sm:text-sm">Actions</span>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -245,21 +225,21 @@ export function DataTable({
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   {columns.map((column) => (
-                    <td key={column.key} className="py-4 px-4">
+                    <td key={column.key} className="py-3 sm:py-4 px-2 sm:px-4">
                       {column.render ? (
                         column.render(row[column.key], row)
                       ) : column.key === 'status' ? (
                         <StatusBadge status={row[column.key]} />
                       ) : (
-                        <span className="text-foreground">{row[column.key]}</span>
+                        <span className="text-foreground text-xs sm:text-sm">{row[column.key]}</span>
                       )}
                     </td>
                   ))}
-                  <td className="py-4 px-4 text-right">
+                  <td className="py-3 sm:py-4 px-2 sm:px-4 text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="hover-scale">
-                          <MoreVertical className="h-4 w-4" />
+                        <Button variant="ghost" size="icon" className="hover-scale h-8 w-8 sm:h-10 sm:w-10">
+                          <MoreVertical className="h-3 w-3 sm:h-4 sm:w-4" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
@@ -288,19 +268,19 @@ export function DataTable({
         </div>
         
         {/* Pagination */}
-        <div className="flex items-center justify-between mt-6 pt-4 border-t border-border">
-          <div className="text-sm text-muted-foreground">
+        <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 mt-6 pt-4 border-t border-border">
+          <div className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
             Showing {Math.min((currentPage - 1) * pageSize + 1, filteredAndSortedData.length)} to{' '}
             {Math.min(currentPage * pageSize, filteredAndSortedData.length)} of{' '}
             {filteredAndSortedData.length} results
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center justify-center sm:justify-end space-x-2">
             <Button
               variant="outline"
               size="sm"
               disabled={currentPage === 1}
               onClick={() => setCurrentPage(currentPage - 1)}
-              className="hover-scale"
+              className="hover-scale text-xs sm:text-sm px-3 sm:px-4"
             >
               Previous
             </Button>
@@ -309,7 +289,7 @@ export function DataTable({
               size="sm"
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage(currentPage + 1)}
-              className="hover-scale"
+              className="hover-scale text-xs sm:text-sm px-3 sm:px-4"
             >
               Next
             </Button>

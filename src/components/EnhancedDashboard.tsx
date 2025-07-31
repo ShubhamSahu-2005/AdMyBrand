@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Moon, Sun, Search, Bell, Download, Calendar, TrendingUp, Users, DollarSign, Target, BarChart3, RefreshCw } from 'lucide-react';
+import { Moon, Sun, Search, Bell, Download, Calendar, TrendingUp, Users, DollarSign, Target, BarChart3, RefreshCw, Filter } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
@@ -12,7 +12,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Chart } from '@/components/ui/custom-chart';
 import { DataTable } from '@/components/ui/data-table';
 import { MetricCardSkeleton, ChartSkeleton, TableSkeleton } from '@/components/ui/loading-skeletons';
-import { MobileMenu } from '@/components/ui/mobile-menu';
+
 import { useTheme } from '@/hooks/use-theme';
 import { mockData, DashboardData } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
@@ -163,25 +163,40 @@ export function EnhancedDashboard() {
     <div className="min-h-screen bg-background transition-colors duration-300">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-gradient-glass backdrop-blur-sm border-b border-border/50 transition-colors duration-300 dark:bg-[hsl(var(--nav-background))]">
-        <div className="container mx-auto px-4 sm:px-6 py-4">
+        <div className="container mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <img src={webLogo} alt="AdMyBrand" className="h-6 sm:h-8 md:h-10" />
+              <img src={webLogo} alt="AdMyBrand" className="h-5 sm:h-6 md:h-8 lg:h-10" />
               {isRealTimeEnabled && (
-                <Badge variant="success" className="animate-pulse hidden sm:flex">
-                  <div className="w-2 h-2 bg-success rounded-full mr-2"></div>
-                  Live
+                <Badge variant="success" className="animate-pulse text-xs sm:text-sm">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-success rounded-full mr-1 sm:mr-2"></div>
+                  <span className="hidden sm:inline">Live</span>
+                  <span className="sm:hidden">●</span>
                 </Badge>
               )}
             </div>
             
             <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4">
-              {/* Date Range Picker - Hidden on mobile and tablet */}
+              {/* Search Input - Mobile First */}
+              <div className="relative hidden sm:block">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search..."
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  className="pl-9 w-32 md:w-40 lg:w-48"
+                />
+              </div>
+              
+
+              
+              {/* Date Range Picker - Responsive */}
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" className="hover-scale hidden lg:flex">
-                    <Calendar className="h-4 w-4 mr-2" />
-                    {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd')}
+                  <Button variant="outline" className="hover-scale text-xs sm:text-sm">
+                    <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                    <span className="hidden sm:inline">{format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd')}</span>
+                    <span className="sm:hidden">{format(dateRange.from, 'MM/dd')} - {format(dateRange.to, 'MM/dd')}</span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
@@ -199,9 +214,9 @@ export function EnhancedDashboard() {
                 </PopoverContent>
               </Popover>
 
-              {/* Timeframe Selector - Hidden on mobile and tablet */}
+              {/* Timeframe Selector - Hidden on mobile */}
               <Select value={timeframe} onValueChange={setTimeframe}>
-                <SelectTrigger className="w-32 hidden xl:flex">
+                <SelectTrigger className="w-20 sm:w-24 md:w-32 text-xs sm:text-sm hidden sm:flex">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -212,19 +227,20 @@ export function EnhancedDashboard() {
                 </SelectContent>
               </Select>
 
-              {/* Real-time Toggle - Hidden on mobile */}
+              {/* Real-time Toggle - Responsive */}
               <Button
                 variant={isRealTimeEnabled ? "default" : "outline"}
                 size="sm"
                 onClick={() => setIsRealTimeEnabled(!isRealTimeEnabled)}
-                className="hover-scale hidden md:flex"
+                className="hover-scale text-xs sm:text-sm"
               >
-                <RefreshCw className={cn("h-4 w-4 mr-2", isRealTimeEnabled && "animate-spin")} />
-                Real-time
+                <RefreshCw className={cn("h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2", isRealTimeEnabled && "animate-spin")} />
+                <span className="hidden sm:inline">Real-time</span>
+                <span className="sm:hidden">Live</span>
               </Button>
               
-              {/* Theme Toggle - Hidden on mobile */}
-              <Button variant="ghost" size="icon" onClick={toggleTheme} className="hover-scale hidden sm:flex">
+              {/* Theme Toggle - Always visible */}
+              <Button variant="ghost" size="icon" onClick={toggleTheme} className="hover-scale">
                 {theme === 'light' ? <Moon className="h-4 w-4 sm:h-5 sm:w-5" /> : <Sun className="h-4 w-4 sm:h-5 sm:w-5" />}
               </Button>
 
@@ -233,34 +249,22 @@ export function EnhancedDashboard() {
                 <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span className="absolute -top-1 -right-1 h-3 w-3 bg-primary rounded-full animate-pulse"></span>
               </Button>
-              
-              {/* User Avatar - Hidden on mobile */}
-              <Avatar className="h-6 w-6 sm:h-8 sm:w-8 md:h-8 md:w-8 hover-scale hidden sm:flex">
+
+              {/* User Avatar - Always visible */}
+              <Avatar className="h-6 w-6 sm:h-8 sm:w-8 md:h-8 md:w-8 hover-scale">
                 <AvatarImage src="/placeholder-avatar.jpg" />
                 <AvatarFallback className="bg-primary text-primary-foreground text-xs sm:text-sm">JD</AvatarFallback>
               </Avatar>
 
-              {/* Mobile Menu */}
-              <MobileMenu
-                theme={theme}
-                toggleTheme={toggleTheme}
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-                dateRange={dateRange}
-                setDateRange={setDateRange}
-                timeframe={timeframe}
-                setTimeframe={setTimeframe}
-                isRealTimeEnabled={isRealTimeEnabled}
-                setIsRealTimeEnabled={setIsRealTimeEnabled}
-              />
+
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-3 sm:px-6 py-3 sm:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-6 lg:py-8 space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8">
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
           <MetricCard
             title="Total Revenue"
             value={`$${totalRevenue.toLocaleString()}`}
@@ -350,11 +354,11 @@ export function EnhancedDashboard() {
                 <div className="space-y-4">
                   {Array.from({ length: 4 }).map((_, i) => (
                     <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-muted/50 animate-pulse">
-                      <div className="space-y-2">
-                        <div className="h-4 bg-muted rounded w-32"></div>
-                        <div className="h-3 bg-muted rounded w-20"></div>
+                      <div className="space-y-2 flex-1 min-w-0">
+                        <div className="h-4 bg-muted rounded w-32 sm:w-40"></div>
+                        <div className="h-3 bg-muted rounded w-20 sm:w-24"></div>
                       </div>
-                      <div className="text-right space-y-2">
+                      <div className="text-right space-y-2 ml-2">
                         <div className="h-4 bg-muted rounded w-16"></div>
                         <div className="h-3 bg-muted rounded w-12"></div>
                       </div>
@@ -369,15 +373,16 @@ export function EnhancedDashboard() {
                       className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200 animate-fade-in"
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
-                      <div>
-                        <p className="font-medium text-foreground">{page.page}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {page.uniqueViews} unique views • {page.bounceRate}% bounce rate
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-foreground truncate">{page.page}</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
+                          <span className="hidden sm:inline">{page.uniqueViews} unique views • </span>
+                          {page.bounceRate}% bounce rate
                         </p>
                       </div>
-                      <div className="text-right">
-                        <p className="font-bold text-foreground">{page.views.toLocaleString()}</p>
-                        <p className="text-sm text-muted-foreground">views</p>
+                      <div className="text-right ml-2">
+                        <p className="font-bold text-foreground text-sm sm:text-base">{page.views.toLocaleString()}</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground">views</p>
                       </div>
                     </div>
                   ))}

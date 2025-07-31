@@ -1,73 +1,212 @@
-# Welcome to your Lovable project
+# AdMyBrand - Marketing Analytics Dashboard
 
-## Project info
+A modern, responsive marketing analytics dashboard built with React, TypeScript, and shadcn/ui. This application provides comprehensive insights into marketing campaigns, user behavior, and business metrics with real-time data visualization.
 
-**URL**: https://lovable.dev/projects/5a93959c-f32d-4bfc-be00-27ed563f6c89
+## 🚀 Features
 
-## How can I edit this code?
+### 📊 **Analytics Dashboard**
+- **KPI Cards**: Revenue, Users, Conversions, and Growth metrics
+- **Interactive Charts**: Line charts, bar charts, and pie charts using Recharts
+- **Real-time Updates**: Live data simulation with configurable refresh rates
+- **Responsive Design**: Optimized for mobile, tablet, and desktop screens
 
-There are several ways of editing your application.
+### 🎯 **Campaign Management**
+- **Campaign Performance Table**: Sortable and filterable data table
+- **Status Tracking**: Active, Paused, and Stopped campaign states
+- **ROI Analysis**: Budget, spent amounts, and return on investment metrics
+- **Export Functionality**: PDF and CSV export capabilities
 
-**Use Lovable**
+### 🎨 **User Interface**
+- **Modern Design**: Clean, professional interface with dark/light theme support
+- **Responsive Navigation**: Mobile-optimized header with essential controls
+- **Loading States**: Skeleton loaders and smooth animations
+- **Toast Notifications**: User feedback and status updates
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/5a93959c-f32d-4bfc-be00-27ed563f6c89) and start prompting.
+### 📱 **Mobile-First Design**
+- **Responsive Layout**: Adapts seamlessly across all device sizes
+- **Touch-Friendly**: Optimized for mobile interactions
+- **Compact Navigation**: Streamlined mobile header with essential controls
+- **Chart Responsiveness**: Charts automatically resize for mobile viewing
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠️ Technology Stack
 
-**Use your preferred IDE**
+### **Frontend Framework**
+- **React 18** with TypeScript
+- **Vite** for fast development and building
+- **React Router DOM** for navigation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### **UI Components & Styling**
+- **shadcn/ui** - Modern component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **Framer Motion** - Smooth animations and transitions
+- **Lucide React** - Beautiful icon library
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### **Data Visualization**
+- **Recharts** - Responsive chart library
+- **Custom Chart Components** - Tailored for analytics needs
 
-Follow these steps:
+### **State Management & Data**
+- **React Query** - Server state management
+- **Mock Data System** - Realistic analytics data simulation
+- **Date-fns** - Date manipulation utilities
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### **Development Tools**
+- **ESLint** - Code linting
+- **TypeScript** - Type safety
+- **PostCSS & Autoprefixer** - CSS processing
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📦 Installation & Setup
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn package manager
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd AdMyBrand
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   Navigate to `http://localhost:8080`
+
+### Available Scripts
+
+```bash
+# Development
+npm run dev          # Start development server
+npm run preview      # Preview production build
+
+# Building
+npm run build        # Build for production
+npm run build:dev    # Build for development
+
+# Code Quality
+npm run lint         # Run ESLint
 ```
 
-**Edit a file directly in GitHub**
+## 📁 Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+├── components/
+│   ├── EnhancedDashboard.tsx    # Main dashboard component
+│   └── ui/                      # shadcn/ui components
+│       ├── custom-chart.tsx     # Chart components
+│       ├── data-table.tsx       # Sortable data table
+│       ├── loading-skeletons.tsx # Loading states
+│       └── ...                  # Other UI components
+├── lib/
+│   ├── mock-data.ts            # Analytics data simulation
+│   ├── utils.ts                # Utility functions
+│   └── export-utils.ts         # PDF/CSV export
+├── hooks/
+│   ├── use-theme.ts            # Theme management
+│   └── use-mobile.tsx          # Mobile detection
+├── pages/
+│   ├── Index.tsx               # Main dashboard page
+│   └── NotFound.tsx            # 404 page
+└── assets/
+    ├── admybrand-logo.png      # Brand assets
+    └── web_logo.svg
+```
 
-**Use GitHub Codespaces**
+## 🎨 Key Components
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### **EnhancedDashboard**
+The main dashboard component featuring:
+- Responsive header with navigation controls
+- KPI metric cards with loading states
+- Interactive charts (line, bar, pie)
+- Campaign performance data table
+- Real-time data simulation
 
-## What technologies are used for this project?
+### **Custom Chart Components**
+- **Line Charts**: Revenue and spend trends
+- **Bar Charts**: Conversions vs sessions
+- **Pie Charts**: Traffic source distribution
+- **Responsive Design**: Automatic mobile optimization
 
-This project is built with:
+### **Data Table**
+- Sortable columns
+- Status filtering
+- Export functionality (PDF/CSV)
+- Pagination controls
+- Mobile-responsive design
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📱 Responsive Design
 
-## How can I deploy this project?
+The dashboard is built with a mobile-first approach:
 
-Simply open [Lovable](https://lovable.dev/projects/5a93959c-f32d-4bfc-be00-27ed563f6c89) and click on Share -> Publish.
+- **Mobile (320px+)**: Compact layout with essential controls
+- **Tablet (768px+)**: Balanced layout with more visible features
+- **Desktop (1024px+)**: Full-featured layout with all controls
 
-## Can I connect a custom domain to my Lovable project?
+### Mobile Navigation
+- Date range picker (responsive)
+- Real-time toggle (responsive)
+- Theme toggle (always visible)
+- User avatar (always visible)
 
-Yes, you can!
+## 🚀 Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Build for Production
+```bash
+npm run build
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Deploy Options
+- **Vercel**: Connect your GitHub repository
+- **Netlify**: Drag and drop the `dist` folder
+- **GitHub Pages**: Use GitHub Actions for automatic deployment
+- **Any Static Host**: Upload the `dist` folder contents
+
+## 🔧 Configuration
+
+### Environment Variables
+Create a `.env` file for environment-specific settings:
+```env
+VITE_API_URL=your_api_url
+VITE_APP_TITLE=AdMyBrand Dashboard
+```
+
+### Customization
+- **Themes**: Modify `src/hooks/use-theme.ts`
+- **Data**: Update `src/lib/mock-data.ts` for different metrics
+- **Styling**: Customize Tailwind classes in components
+- **Charts**: Modify chart configurations in `src/components/ui/custom-chart.tsx`
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+For support and questions:
+- Create an issue in the GitHub repository
+- Check the documentation in the code comments
+- Review the component examples in the `src/components` directory
+
+---
+
+**Built with ❤️ using React, TypeScript, and shadcn/ui**

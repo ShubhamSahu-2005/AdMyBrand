@@ -148,10 +148,10 @@ export function DataTable({
 
   return (
     <Card className="bg-card shadow-card border-border/50 animate-fade-in">
-      <CardHeader>
-        <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+      <CardHeader className="pb-3">
+        <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
           <CardTitle className="text-lg sm:text-xl">{title}</CardTitle>
-          <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-x-2 sm:space-y-0">
+          <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-x-2 sm:space-y-0">
 
             
             {filterable && (
@@ -199,7 +199,7 @@ export function DataTable({
                 {columns.map((column) => (
                   <th
                     key={column.key}
-                    className={`text-left py-3 px-2 sm:px-4 font-medium text-muted-foreground ${
+                    className={`text-left py-2 px-2 sm:px-4 font-medium text-muted-foreground ${
                       column.sortable ? 'cursor-pointer hover:text-foreground transition-colors' : ''
                     }`}
                     onClick={() => column.sortable && handleSort(column.key)}
@@ -212,7 +212,7 @@ export function DataTable({
                     </div>
                   </th>
                 ))}
-                <th className="text-right py-3 px-2 sm:px-4 font-medium text-muted-foreground">
+                <th className="text-right py-2 px-2 sm:px-4 font-medium text-muted-foreground">
                   <span className="text-xs sm:text-sm">Actions</span>
                 </th>
               </tr>
@@ -225,7 +225,7 @@ export function DataTable({
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   {columns.map((column) => (
-                    <td key={column.key} className="py-3 sm:py-4 px-2 sm:px-4">
+                    <td key={column.key} className="py-2 sm:py-3 px-2 sm:px-4">
                       {column.render ? (
                         column.render(row[column.key], row)
                       ) : column.key === 'status' ? (
@@ -235,7 +235,7 @@ export function DataTable({
                       )}
                     </td>
                   ))}
-                  <td className="py-3 sm:py-4 px-2 sm:px-4 text-right">
+                  <td className="py-2 sm:py-3 px-2 sm:px-4 text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon" className="hover-scale h-8 w-8 sm:h-10 sm:w-10">
